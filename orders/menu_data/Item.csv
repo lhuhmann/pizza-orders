@@ -1,0 +1,69 @@
+﻿item_type,menu,topping_type,size,price
+Regular,pizza,Cheese,Small,13.25
+Regular,pizza,1 topping,Small,14.25
+Regular,pizza,2 toppings,Small,15.75
+Regular,pizza,3 toppings,Small,16.75
+Regular,pizza,Special,Small,18.3
+Regular,pizza,Cheese,Large,18.75
+Regular,pizza,1 topping,Large,20.75
+Regular,pizza,2 toppings,Large,22.75
+Regular,pizza,3 toppings,Large,24.75
+Regular,pizza,Special,Large,26.75
+Sicilian,pizza,Cheese,Small,25.25
+Sicilian,pizza,1 item,Small,27.25
+Sicilian,pizza,2 items,Small,29.75
+Sicilian,pizza,3 items,Small,31.25
+Sicilian,pizza,Special,Small,32.25
+Sicilian,pizza,Cheese,Large,39.7
+Sicilian,pizza,1 item,Large,41.7
+Sicilian,pizza,2 items,Large,43.7
+Sicilian,pizza,3 items,Large,45.7
+Sicilian,pizza,Special,Large,46.7
+Cheese,Subs,,Small,6.95
+Italian,Subs,,Small,6.95
+Ham + Cheese,Subs,,Small,6.95
+Meatball,Subs,,Small,6.95
+Tuna,Subs,,Small,6.95
+Turkey,Subs,,Small,7.5
+Chicken Parmigiana,Subs,,Small,7.95
+Eggplant Parmigiana,Subs,,Small,6.95
+Steak,Subs,,Small,6.85
+Steak + Cheese,Subs,,Small,7.6
+Hamburger,Subs,,Small,5.1
+Cheeseburger,Subs,,Small,5.6
+Fried Chicken,Subs,,Small,6.95
+Veggie,Subs,,Small,6.95
+Cheese,Subs,,Large,8.5
+Italian,Subs,,Large,8.5
+Ham + Cheese,Subs,,Large,8.5
+Meatball,Subs,,Large,8.5
+Tuna,Subs,,Large,8.5
+Turkey,Subs,,Large,8.5
+Chicken Parmigiana,Subs,,Large,8.95
+Eggplant Parmigiana,Subs,,Large,8.5
+Steak,Subs,,Large,8.5
+Steak + Cheese,Subs,,Large,9.25
+Hamburger,Subs,,Large,7.45
+Cheeseburger,Subs,,Large,7.95
+Fried Chicken,Subs,,Large,8.95
+Veggie,Subs,,Large,8.95
+"Sausage, Peppers & Onions",Subs,,Large,8.95
+Baked Ziti w/Mozzarella,Pasta,,,7
+Baked Ziti w/Meatballs,Pasta,,,9.25
+Baked Ziti w/Chicken,Pasta,,,10.25
+Garden Salad,Salad,,,6.75
+Greek Salad,Salad,,,8.75
+Antipasto,Salad,,,8.75
+Salad w/Tuna,Salad,,,8.75
+Garden Salad,Dinner platters,,Small,40 
+Greek Salad,Dinner platters,,Small,50 
+Antipasto,Dinner platters,,Small,50 
+Baked Ziti,Dinner platters,,Small,40 
+Meatball Parm,Dinner platters,,Small,50 
+Chicken Parm,Dinner platters,,Small,55 
+Garden Salad,Dinner platters,,Large,65 
+Greek Salad,Dinner platters,,Large,75 
+Antipasto,Dinner platters,,Large,75 
+Baked Ziti,Dinner platters,,Large,65 
+Meatball Parm,Dinner platters,,Large,75 
+Chicken Parm,Dinner platters,,Large,85 

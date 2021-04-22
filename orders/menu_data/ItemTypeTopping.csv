@@ -1,0 +1,57 @@
+﻿item_type,topping,price
+Cheese,Cheese,0.5
+Italian,Cheese,0.5
+Ham + Cheese,Cheese,0.5
+Meatball,Cheese,0.5
+Tuna,Cheese,0.5
+Turkey,Cheese,0.5
+Chicken Parmigiana,Cheese,0.5
+Eggplant Parmigiana,Cheese,0.5
+Steak,Cheese,0.5
+Steak + Cheese,Cheese,0.5
+Hamburger,Cheese,0.5
+Cheeseburger,Cheese,0.5
+Fried Chicken,Cheese,0.5
+Veggie,Cheese,0.5
+"Sausage, Peppers & Onions",Cheese,0.5
+Steak + Cheese,Mushrooms,0.5
+Steak + Cheese,Green Peppers,0.5
+Steak + Cheese,Onions,0.5
+Regular,Pepperoni,0
+Regular,Sausage,0
+Regular,Mushrooms,0
+Regular,Onions,0
+Regular,Ham,0
+Regular,Canadian Bacon,0
+Regular,Pineapple,0
+Regular,Eggplant,0
+Regular,Tomato & Basil,0
+Regular,Green Peppers,0
+Regular,Hamburger,0
+Regular,Spinach,0
+Regular,Artichoke,0
+Regular,Buffalo Chicken,0
+Regular,Barbecue Chicken,0
+Regular,Anchovies,0
+Regular,Black Olives,0
+Regular,Fresh Garlic,0
+Regular,Zucchini,0
+Sicilian,Pepperoni,0
+Sicilian,Sausage,0
+Sicilian,Mushrooms,0
+Sicilian,Onions,0
+Sicilian,Ham,0
+Sicilian,Canadian Bacon,0
+Sicilian,Pineapple,0
+Sicilian,Eggplant,0
+Sicilian,Tomato & Basil,0
+Sicilian,Green Peppers,0
+Sicilian,Hamburger,0
+Sicilian,Spinach,0
+Sicilian,Artichoke,0
+Sicilian,Buffalo Chicken,0
+Sicilian,Barbecue Chicken,0
+Sicilian,Anchovies,0
+Sicilian,Black Olives,0
+Sicilian,Fresh Garlic,0
+Sicilian,Zucchini,0
