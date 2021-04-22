@@ -18,9 +18,6 @@ def load_topping_types(apps, schema_editor):
         next(reader)
         for topping_type, topping_num in reader:
             t = ToppingType(topping_type = topping_type, topping_num = topping_num)
-            # topping_type = apps.get_model("orders", "ToppingType")
-            # topping_type.topping_type = topping_type
-            # topping_type.topping_num = topping_num
             t.save()
             topping_type_map[topping_type] = t
     return topping_type_map
@@ -43,8 +40,6 @@ def load_toppings(apps, schema_editor):
         topping_map = {}
         for (topping,) in reader:
             t = Topping(topping = topping)
-            # topping = apps.get_model("orders", "Topping")
-            # topping.topping = topping
             t.save()
             topping_map[topping] = t
     return topping_map
@@ -72,12 +67,6 @@ def load_items(apps, schema_editor, topping_type_map):
             else:
                 raise Exception(f"Topping type {topping_type} is not recognized")
             i = Item(item_type = item_type, menu = menu, topping_type = topping_type, size = size, price = price)
-            # item = apps.get_model("orders", "Item")
-            # item.item_type = item_type
-            # item.menu = menu
-            # item.topping_type = topping_type
-            # item.size = size
-            # item.price = price
             i.save()
 
 # optional; used for rolling back migrations
@@ -99,10 +88,6 @@ def load_item_type_toppings(apps, schema_editor, topping_map):
             print(topping)
             topping = topping_map[topping]
             itt = ItemTypeTopping(item_type = item_type, topping = topping, price = price)
-            # pair = apps.get_model("orders", "ItemTypeTopping")
-            # pair.item_type = item_type
-            # pair.topping = topping
-            # pair.price = price
             itt.save()
 
 # optional; used for rolling back migrations
@@ -124,7 +109,7 @@ def delete_all_menu_data(apps, schema_editor):
 
 class Migration(migrations.Migration):
     dependencies = [
-        ('orders', '0001_create_db'),
+        ('orders', '0001_initial'),
     ]
 
     operations = [
