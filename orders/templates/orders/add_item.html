@@ -7,12 +7,13 @@
     <h1>{{ item.first.menu }}: {{ item.first.item_type }}</h1>
 {% endif %}
 
+<text>Price: ${{ item.first.price }}</text>
+
 {% if item.first.menu != "Salad" and item.first.menu != Pasta %}
-<form action="">
-    <input type="radio" id="small" name="size" value="small">
-    <label for="small">Small</label><br>
-    <input type="radio" id="large" name="size" value="large">
-    <label for="large">Large</label><br>
+<form action="{% url 'add_item' item.first.id %}" method="post">
+    {% csrf_token %}
+    {{ order_form }}
+    <input type="submit">
 </form>
 
 {% endif %}
