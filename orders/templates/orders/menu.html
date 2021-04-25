@@ -25,7 +25,7 @@
         <td>{{ item.size }}</td>
       {% endif %}
       <td>${{ item.price }}</td>
-      <td>Add to cart</td>
+      <td><a href="{% url 'add_item' item.id %}">Add to cart</a></td>
       </tr>
       {% endfor %}
       </tbody>

@@ -1,0 +1,19 @@
+{% extends "orders/base.html" %}
+
+{% block body %}
+{% if item.first.menu == "Regular Pizza" or item.first.menu == "Sicilian Pizza" %}
+    <h1>{{ item.first.menu }}: {{ item.first.topping_type }}</h1>
+{% else %}
+    <h1>{{ item.first.menu }}: {{ item.first.item_type }}</h1>
+{% endif %}
+
+{% if item.first.menu != "Salad" and item.first.menu != Pasta %}
+<form action="">
+    <input type="radio" id="small" name="size" value="small">
+    <label for="small">Small</label><br>
+    <input type="radio" id="large" name="size" value="large">
+    <label for="large">Large</label><br>
+</form>
+
+{% endif %}
+{% endblock %}

@@ -21,3 +21,8 @@ def menu(request):
         "dinner_platter": Item.objects.filter(menu = "Dinner Platters")
         }
     })
+
+def add_item(request, item_id):
+    return render(request, "orders/add_item.html", {
+        "item": Item.objects.filter(id = item_id)
+    })
