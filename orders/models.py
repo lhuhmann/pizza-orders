@@ -25,7 +25,7 @@ class ToppingType(models.Model):
     topping_num = models.IntegerField(choices=ToppingNumEnum.choices)
 
     def __str__(self):
-        return f'{self.topping_type}: {self.topping_num}'
+        return f'{self.topping_type}'
 
 # list of all toppings
 class Topping(models.Model):
