@@ -1,19 +1,37 @@
 {% extends "orders/base.html" %}
 
 {% block body %}
-{% if item.first.menu == "Regular Pizza" or item.first.menu == "Sicilian Pizza" %}
-    <h1>{{ item.first.menu }}: {{ item.first.topping_type }}</h1>
+{% if item.menu == "Regular Pizza" or item.menu == "Sicilian Pizza" %}
+    <h1>{{ item.menu }}: {{ item.topping_type }}</h1>
 {% else %}
-    <h1>{{ item.first.menu }}: {{ item.first.item_type }}</h1>
+    <h1>{{ item.menu }}: {{ item.item_type }}</h1>
 {% endif %}
 
-<text>Price: ${{ item.first.price }}</text>
+<text>Size: {{ item.size }}</text>
+<br>
+<text>Price: ${{ item.price }}</text>
+<br>
+<br>
 
-{% if item.first.menu != "Salad" and item.first.menu != Pasta %}
-<form action="{% url 'add_item' item.first.id %}" method="post">
+{% if item.menu != "Salad" and item.menu != Pasta %}
+<form action="{% url 'add_item' item.id %}" method="post">
     {% csrf_token %}
-    {{ order_form }}
-    <input type="submit">
+    <input type="hidden" id="" name="item" value="{{ item.id }}">
+    <input type="hidden" id="" name="topping_num" value="{{ topping_num }}">
+    {% if topping_num > 0 %}
+        <text>Select your toppings</text>
+        <br>
+        {% for topping in topping_choices %}
+            <input type="checkbox" id="" name="topping" value="{{ topping.id }}">
+            <label for="{{ topping.topping }}">{{ topping.topping }}</label><br>
+        {% endfor %}
+    {% endif %}
+    <br>
+    <label for="quantity">Quantity:</label>
+    <input type="number" min="1" max="10" id="" name="quantity" style="width: 4em">
+    <br>
+    <br>
+    <input type="submit" value="Add to cart">
 </form>
 
 {% endif %}

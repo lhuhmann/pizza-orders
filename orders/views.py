@@ -3,24 +3,27 @@ import sys
 from django import forms
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.http import HttpResponseRedirect
+from django.urls import reverse
 
-from .models import Item, ItemTypeTopping
+from .models import Item, ItemTypeTopping, ToppingType
 
 # Forms
-class OrderForm(forms.Form):
-    toppings_choices = (
-        ("t1", "cheese"),
-        ("t2", "arugula"),
-        ("t3", "olives"),
-    )
-    toppings = forms.MultipleChoiceField(choices=toppings_choices, widget=forms.CheckboxSelectMultiple)
+# class OrderForm(forms.Form):
+#     toppings_test = ItemTypeTopping.objects.filter()
+#     toppings_choices = (
+#         ("t1", "cheese"),
+#         ("t2", "arugula"),
+#         ("t3", "olives"),
+#     )
+#     toppings = forms.MultipleChoiceField(choices=toppings_choices, widget=forms.CheckboxSelectMultiple)
 
-    def clean_toppings(self):
-        print(self.cleaned_data, file=sys.stderr)
-        value = self.cleaned_data['toppings']
-        if len(value) > 2:
-            raise forms.ValidationError("You can't select more than 2 items.")
-        return value
+#     def clean_toppings(self):
+#         print(self.cleaned_data, file=sys.stderr)
+#         value = self.cleaned_data['toppings']
+#         if len(value) > 2:
+#             raise forms.ValidationError("You can't select more than 2 items.")
+#         return value
 
 # Create your views here.
 def index(request):
@@ -42,14 +45,39 @@ def menu(request):
         }
     })
 
+def validate_toppings(topping_num, toppings):
+    if len(toppings) > topping_num:
+        raise forms.ValidationError(f'Only {topping_num} toppings are permitted for this item.')
+
 def add_item(request, item_id):
     if request.method == "POST":
-        order_form = OrderForm(request.POST)
-        if order_form.is_valid():
-            data = order_form.cleaned_data
+        data = request.POST
+        print("data", file=sys.stderr)
+        print(data, file=sys.stderr)
+        item_id = data["item"]
+        topping_num = int(data["topping_num"])
+        quantity = data["quantity"]
+        if "topping" in data:
+            # It's necessary to use getlist here, since using the key directly as above
+            # only returns the last value if there are multiple values associated with the key.
+            topping_ids = request.POST.getlist("topping")
+            # topping_ids may be either string or list of strings
+            # want a consistent format, so convert to list of ints
+            if isinstance(topping_ids, str):
+                topping_ids = [int(topping_ids)]
+            else:
+                topping_ids = list(map(int, topping_ids))
+            validate_toppings(topping_num, topping_ids)
+        # order_form = OrderForm(request.POST)
+        # if order_form.is_valid():
+            # data = order_form.cleaned_data
+        # redirect user to menu page (probably not exactly what we want)
+        return HttpResponseRedirect(reverse("menu"))
     else:
-        order_form = OrderForm()
-    return render(request, "orders/add_item.html", {
-        "item": Item.objects.filter(id = item_id),
-        "order_form": order_form
+        # order_form = OrderForm()
+        item = Item.objects.filter(id = item_id).first()
+        return render(request, "orders/add_item.html", {
+            "item": item,
+            "topping_choices": ItemTypeTopping.objects.filter(item_type = item.item_type),
+            "topping_num": ToppingType.objects.filter(topping_type = item.topping_type).first().topping_num
     })
