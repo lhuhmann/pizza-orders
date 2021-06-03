@@ -19,7 +19,10 @@
     <input type="hidden" id="" name="item" value="{{ item.id }}">
     <input type="hidden" id="" name="topping_num" value="{{ topping_num }}">
     {% if topping_num > 0 %}
-        <text>Select your toppings</text>
+        {% if toppings_error %}
+            <p style="color:red">{{ toppings_error }}</p>
+        {% endif %}
+        <text>Select your toppings:</text>
         <br>
         {% for topping in topping_choices %}
             <input type="checkbox" id="" name="topping" value="{{ topping.id }}">
@@ -28,7 +31,7 @@
     {% endif %}
     <br>
     <label for="quantity">Quantity:</label>
-    <input type="number" min="1" max="10" id="" name="quantity" style="width: 4em">
+    <input type="number" min="1" max="10" id="" name="quantity" style="width: 4em" value="{{ quantity }}">
     <br>
     <br>
     <input type="submit" value="Add to cart">
