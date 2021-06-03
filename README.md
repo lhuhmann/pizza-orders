@@ -18,3 +18,8 @@
 5. Run python manage.py migrate to load data into app
 6. Run winpty python manage.py createsuperuser to add a user who can view admin interface
 7. To inspect the database locally, one option is to install DB Browser for SQLLite
+
+# Steps to add a url
+1. Add to urls.py
+2. Add html template
+3. Add function to views.py

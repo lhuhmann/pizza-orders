@@ -1,12 +1,13 @@
 import sys
 
 from django import forms
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.http import HttpResponse
 from django.http import HttpResponseRedirect
 from django.urls import reverse
+from django.core.exceptions import ValidationError
 
-from .models import Item, ItemTypeTopping, ToppingType
+from .models import Customer, Item, ItemTypeTopping, ToppingType
 
 # Forms
 # class OrderForm(forms.Form):
@@ -24,6 +25,28 @@ from .models import Item, ItemTypeTopping, ToppingType
 #         if len(value) > 2:
 #             raise forms.ValidationError("You can't select more than 2 items.")
 #         return value
+class LoginForm(forms.ModelForm):
+    class Meta:
+        model = Customer
+        fields = ['username', 'password']
+
+class RegistrationForm(forms.ModelForm):
+    # TODO: Ideally I should have the validate password field also inherit its characteristics from the Customer model
+    password2 = forms.CharField(max_length=64, label="Confirm password")
+
+    class Meta:
+        model = Customer
+        # writing out the fields rather than using fields = '__all__' because I want the password last next to the confirm password field
+        fields = ['username', 'first_name', 'last_name', 'email', 'password']
+    
+    def clean(self):
+        cleaned_data = super().clean()
+        password1 = cleaned_data.get("password")
+        password2 = cleaned_data.get("password2")
+        if password1 != password2:
+            raise ValidationError(
+                    "Registration failed - passwords do not match"
+                )
 
 # Create your views here.
 def index(request):
@@ -31,6 +54,27 @@ def index(request):
 
 def greet(request, name):
     return HttpResponse(f"Hello, {name.capitalize()}")
+
+def login(request):
+    '''Log in user'''
+    if request.method == 'POST':
+        form = LoginForm(request.POST)
+        # form = UserCreationForm()
+        if form.is_valid():
+            return redirect('menu')
+    else:
+        form = LoginForm()
+    return render(request, 'orders/login.html', {'form': form})
+
+def register(request):
+    if request.method == 'POST':
+        form = RegistrationForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('login')
+    else:
+        form = RegistrationForm()
+    return render(request, 'orders/register.html', {'form': form})
 
 def menu(request):
     # TODO: I think ideally pull all the distinct menu types and iterate over them rather than hard-coding them?
@@ -54,8 +98,6 @@ def validate_toppings(topping_num, toppings):
 def add_item(request, item_id):
     if request.method == "POST":
         data = request.POST
-        print("data", file=sys.stderr)
-        print(data, file=sys.stderr)
         item_id = data["item"]
         item = Item.objects.filter(id = item_id).first()
         topping_num = int(data["topping_num"])

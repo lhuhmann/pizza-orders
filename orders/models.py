@@ -79,7 +79,7 @@ class ItemTypeTopping(models.Model):
 
 ### Orders ###
 class Customer(models.Model):
-    username = models.CharField(max_length=64)
+    username = models.CharField(max_length=64, primary_key = True)
     password = models.CharField(max_length=64)
     first_name = models.CharField(max_length=64)
     last_name = models.CharField(max_length=64)

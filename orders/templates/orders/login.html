@@ -1,0 +1,10 @@
+{% extends "orders/base.html" %}
+
+{% block body %}
+<h1>Log In:</h1>
+<form action="{% url 'login' %}" method="post">
+    {% csrf_token %}
+    {{ form }}
+    <input type="submit">
+</form>
+{% endblock %}
