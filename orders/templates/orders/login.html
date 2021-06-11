@@ -1,9 +1,15 @@
 {% extends "orders/base.html" %}
 
 {% block body %}
+{% if logout %}
+    <p style="color:black">{{ logout }}</p>
+{% endif %}
 <h1>Log In:</h1>
 <form action="{% url 'login' %}" method="post">
     {% csrf_token %}
+    {% if login_error %}
+        <p style="color:red">{{ login_error }}</p>
+    {% endif %}
     {{ form }}
     <input type="submit">
 </form>
