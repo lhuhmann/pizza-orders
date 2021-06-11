@@ -86,7 +86,7 @@ class Customer(models.Model):
     email = models.CharField(max_length=64)
 
     def __str__(self):
-        return f'({self.id}) {self.username}: {self.first_name} {self.last_name}'
+        return f'({self.username}: {self.first_name} {self.last_name}'
 
 class Order(models.Model):
     # enumerate field

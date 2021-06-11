@@ -12,11 +12,11 @@
 
 # Steps taken to create database
 1. Create models.py
-2. Run python manage.py makemigrations orders
-3. Run python manage.py migrate
-4. Create 0002_load_data.py to define migration to load data into the app
-5. Run python manage.py migrate to load data into app
-6. Run winpty python manage.py createsuperuser to add a user who can view admin interface
+2. Run `python manage.py makemigrations orders`
+3. Run `python manage.py migrate`
+4. Create `0002_load_data.py` to define migration to load data into the app
+5. Run `python manage.py migrate` to load data into app
+6. Run `winpty python manage.py createsuperuser` to add a user who can view admin interface
 7. To inspect the database locally, one option is to install DB Browser for SQLLite
 
 # Steps to add a url
