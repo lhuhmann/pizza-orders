@@ -35,12 +35,12 @@
   </head>
   <body>
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <a class="navbar-brand" href="/menu">Menu</a>
+      <a class="navbar-brand" href="{% url 'menu' %}">Menu</a>
       {% if request.session.username %}
-        <a class="navbar-brand" href="/logout">Log out {{ request.session.username }}</a>
+        <a class="navbar-brand" href="{% url 'logout' %}">Log out {{ request.session.username }}</a>
       {% else %}
-        <a class="navbar-brand" href="/register">Register</a>
-        <a class="navbar-brand" href="/login">Log in</a>
+        <a class="navbar-brand" href="{% url 'register' %}">Register</a>
+        <a class="navbar-brand" href="{% url 'login' %}">Log in</a>
       {% endif %}
       <br>
       <br>
