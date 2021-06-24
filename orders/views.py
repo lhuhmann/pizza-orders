@@ -7,7 +7,7 @@ from django.http import HttpResponseRedirect
 from django.urls import reverse
 from django.core.exceptions import ValidationError
 
-from .models import Customer, Item, ItemTypeTopping, ToppingType
+from .models import Customer, Item, ItemTypeTopping, ToppingType, Order, OrderItem, OrderItemTopping, Topping
 
 ### Forms
 # class OrderForm(forms.Form):
@@ -121,11 +121,29 @@ def menu(request):
             }
         })
 
-def validate_toppings(topping_num, toppings):
-    if len(toppings) > topping_num:
-        return False
+def add_to_cart(request, quantity, item, toppings, topping_num = None, topping_ids = None):
+    customer = Customer.objects.get(username = request.session['username'])
+    # create a cart for this user if they don't have one
+    if not Order.objects.filter(customer = customer, status = "Cart").exists():
+        order = Order.objects.create(customer = customer, status = "Cart")
+        order.save()
     else:
-        return True
+        order = Order.objects.get(customer = customer, status = "Cart")
+    for i in range(quantity):
+        # add each ordered item to OrderItem table
+        order_item = OrderItem.objects.create(order = order, item = item)
+        order_item.save()
+        if toppings:
+            # add each item-topping pair to OrderItemTopping table
+            for i in range(topping_num):
+                topping_id = topping_ids[i]
+                topping_name = ItemTypeTopping.objects.get(id = topping_id).topping
+                topping = Topping.objects.get(topping = topping_name)
+                # print(item_type_topping, file=sys.stderr)
+                # raise NameError()
+                order_item_topping = OrderItemTopping.objects.create(order_item = order_item, topping = topping)
+                order_item_topping.save()
+
 
 def add_item(request, item_id):
     if not 'username' in request.session:
@@ -139,7 +157,7 @@ def add_item(request, item_id):
             item_id = data['item']
             item = Item.objects.filter(id = item_id).first()
             topping_num = int(data['topping_num'])
-            quantity = data['quantity']
+            quantity = int(data['quantity'])
             if 'topping' in data:
                 # It's necessary to use getlist here, since using the key directly as above
                 # only returns the last value if there are multiple values associated with the key.
@@ -150,22 +168,30 @@ def add_item(request, item_id):
                     topping_ids = [int(topping_ids)]
                 else:
                     topping_ids = list(map(int, topping_ids))
-                toppings_are_valid = validate_toppings(topping_num, topping_ids)
-            # order_form = OrderForm(request.POST)
-            # if order_form.is_valid():
-                # data = order_form.cleaned_data
-            # redirect user to menu page (probably not exactly what we want)
-            if toppings_are_valid:
-                return HttpResponseRedirect(reverse('menu'))
+                if len(topping_ids) > topping_num:
+                    toppings_error = f'The maximum number of toppings permitted for this item is {topping_num}.'
+                    return render(request, 'orders/add_item.html', {
+                    'item': item,
+                    'topping_choices': ItemTypeTopping.objects.filter(item_type = item.item_type),
+                    'topping_num': ToppingType.objects.filter(topping_type = item.topping_type).first().topping_num,
+                    'toppings_error': toppings_error,
+                    'quantity': quantity
+                    })
+                elif len(topping_ids) < topping_num:
+                    toppings_error = f'Insufficient toppings selected.'
+                    return render(request, 'orders/add_item.html', {
+                    'item': item,
+                    'topping_choices': ItemTypeTopping.objects.filter(item_type = item.item_type),
+                    'topping_num': ToppingType.objects.filter(topping_type = item.topping_type).first().topping_num,
+                    'toppings_error': toppings_error,
+                    'quantity': quantity
+                    })
+                else:
+                    add_to_cart(request = request, quantity = quantity, item = item, toppings = True)
+                    return HttpResponseRedirect(reverse('cart'))
             else:
-                toppings_error = f'The maximum number of toppings permitted for this item is {topping_num}.'
-                return render(request, 'orders/add_item.html', {
-                'item': item,
-                'topping_choices': ItemTypeTopping.objects.filter(item_type = item.item_type),
-                'topping_num': ToppingType.objects.filter(topping_type = item.topping_type).first().topping_num,
-                'toppings_error': toppings_error,
-                'quantity': quantity
-        })
+                add_to_cart(request = request, quantity = quantity, item = item, toppings = False)
+                return HttpResponseRedirect(reverse('cart'))
         else:
             # order_form = OrderForm()
             item = Item.objects.filter(id = item_id).first()
@@ -174,3 +200,9 @@ def add_item(request, item_id):
                 'topping_choices': ItemTypeTopping.objects.filter(item_type = item.item_type),
                 'topping_num': ToppingType.objects.filter(topping_type = item.topping_type).first().topping_num
         })
+
+def cart(request):
+    return render(request, 'orders/cart.html', {
+    'item': "hello"
+    })
+
