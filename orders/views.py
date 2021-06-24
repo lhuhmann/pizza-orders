@@ -158,7 +158,7 @@ def add_item(request, item_id):
             item = Item.objects.filter(id = item_id).first()
             topping_num = int(data['topping_num'])
             quantity = int(data['quantity'])
-            if 'topping' in data:
+            if topping_num > 0:
                 # It's necessary to use getlist here, since using the key directly as above
                 # only returns the last value if there are multiple values associated with the key.
                 topping_ids = request.POST.getlist('topping')
@@ -173,6 +173,7 @@ def add_item(request, item_id):
                     return render(request, 'orders/add_item.html', {
                     'item': item,
                     'topping_choices': ItemTypeTopping.objects.filter(item_type = item.item_type),
+                    'topping_ids': topping_ids,
                     'topping_num': ToppingType.objects.filter(topping_type = item.topping_type).first().topping_num,
                     'toppings_error': toppings_error,
                     'quantity': quantity
@@ -182,6 +183,7 @@ def add_item(request, item_id):
                     return render(request, 'orders/add_item.html', {
                     'item': item,
                     'topping_choices': ItemTypeTopping.objects.filter(item_type = item.item_type),
+                    'topping_ids': topping_ids,
                     'topping_num': ToppingType.objects.filter(topping_type = item.topping_type).first().topping_num,
                     'toppings_error': toppings_error,
                     'quantity': quantity

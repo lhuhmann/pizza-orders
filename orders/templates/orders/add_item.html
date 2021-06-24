@@ -25,7 +25,11 @@
         <text>Select your toppings:</text>
         <br>
         {% for topping in topping_choices %}
-            <input type="checkbox" id="" name="topping" value="{{ topping.id }}">
+            {% if topping.id in topping_ids %}
+                <input type="checkbox" id="" name="topping" value="{{ topping.id }}" checked>
+            {% else %}
+                <input type="checkbox" id="" name="topping" value="{{ topping.id }}">
+            {% endif %}
             <label for="{{ topping.topping }}">{{ topping.topping }}</label><br>
         {% endfor %}
     {% endif %}
